@@ -3,12 +3,7 @@ const cheerio = require('cheerio');
 const Promise = require('bluebird');
 
 class OpenGraphParser {
-  constructor() {
-    this.parse('https://ifunny.co/fun/RDB5IDrD5')
-      .then((data) => {
-        console.log(data);
-      });
-  }
+  constructor() { }
 
   async getResource(url) {
     return await request.get(url);
@@ -33,7 +28,6 @@ class OpenGraphParser {
       }
 
       const content = attribs.content;
-
       const propertyArray = property.split(':');
 
       if (propertyArray[0] !== 'og') {
@@ -46,31 +40,28 @@ class OpenGraphParser {
         continue;
       }
 
-      const key = propertyArray.length[1];
-      const subKey = propertyArray.length[2];
+      const key = propertyArray[1];
+      const subKey = propertyArray[2];
 
-      if (subKey !== undefined) {
-        if (og.hasOwnProperty(key)) {
-          if (!Array.isArray(og[key])) {
-            og[key][subKey] = content;
-          } else {
-            const tmpLength = og[key].length;
-            og[key][tmpLength - 1][subKey] = content;
-          }
+      if (subKey === undefined) {
+        if (og[key] === undefined) {
+          og[key] = content;
+        } else {
+          og[key][key] = content;
         }
       } else {
-        if (!og.hasOwnProperty(key)) {
-          og[key] = {}
-          og[key][key] = content;
+        if (og[key] === undefined) {
+          og[key] = {};
+          og[key][subKey] = content;
         } else {
-          if (!Array.isArray(og[key])) {
-            const current = og[key];
-            og[key] = [current];
+          if (typeof og[key] !== 'string') {
+            og[key][subKey] = content;
+          } else {
+            const temporal = og[key];
+            og[key] = {};
+            og[key][key] = temporal;
+            og[key][subKey] = content;
           }
-
-          const tmpObj = {};
-          tmpObj[key] = content;
-          og[key].push(tmpObj);
         }
       }
     };
