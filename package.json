@@ -1,17 +1,39 @@
 {
   "name": "ogparser",
-  "version": "1.0.0",
-  "description": "Parse open-graph meta-tags from url",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "Safe and fast Open Graph meta tags parser for Node.js",
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "files": [
+    "src",
+    "index.d.ts"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/saintgeo23/ogparser.git"
   },
   "keywords": [
-    "open-graph"
+    "open-graph",
+    "opengraph",
+    "og",
+    "meta",
+    "parser",
+    "scraper",
+    "link-preview",
+    "unfurl"
   ],
   "author": "George Volokitin <saintgeo23@gmail.com>",
   "license": "ISC",
@@ -20,9 +42,6 @@
   },
   "homepage": "https://github.com/saintgeo23/ogparser#readme",
   "dependencies": {
-    "bluebird": "^3.5.1",
-    "cheerio": "^1.0.0-rc.2",
-    "request": "^2.83.0",
-    "request-promise": "^4.2.2"
+    "htmlparser2": "^12.0.0"
   }
 }
