@@ -1,10 +1,14 @@
 # ogparser
 Node.js module for parsing Open Graph meta-tags from URL
 
+> **1.x is in maintenance mode.** It only receives security fixes. Use [2.x](https://github.com/saintgeo23/ogparser) for multiple images, relative URL resolution and SSRF protection.
+
+## Requirements
+Node.js 18 or newer.
+
 ## Dependencies
 - bluebird
-- cheerio
-- request-promise
+- htmlparser2
 
 ## Installation
 ```bash
@@ -35,6 +39,13 @@ async function getOG(url) {
   url: 'https://example.com/articles/funny_kittens'
 }
 ```
+
+If a page has several `og:image` (or other repeated tags), the first one is returned.
+
+Requests time out after 10 seconds, at most 1 MiB of a page is read.
+
+## Security
+`parse(url)` requests any URL it is given, including `localhost` and private networks. Do not pass user-provided URLs to it on a server, or upgrade to 2.x, which blocks such requests.
 
 ## Links
 [The Open Graph protocol](http://ogp.me/ "The Open Graph protocol documentation") documentation.
